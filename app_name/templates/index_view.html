@@ -3,7 +3,16 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-6">
-            <h1 class="page-header">Hello world</h1>
+            <h1 class="page-header">Bleeps</h1>
+            {% for bleep in bleeps %}
+
+                <p>{{ bleep.user }}</p>
+                <p>{{ bleep.timestamp }}</p>
+                <p>{{ bleep.timestamp|timesince }}</p>
+                <p>{{ bleep.content }}</p>
+
+            {% endfor %}
+
             <p>Hello, hello.</p>
             <p>
                 <button type="button" class="btn btn-lg btn-primary">I'm a button</button>

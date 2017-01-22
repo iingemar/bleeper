@@ -4,7 +4,10 @@ from .models import Bleep
 
 
 def index_view(request):
-    context = {}
+    bleeps = Bleep.objects.all()
+    context = {
+        'bleeps': bleeps
+    }
     return render(request, 'index_view.html', context)
 
 
