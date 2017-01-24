@@ -10,10 +10,9 @@ class BleepModelForm(forms.ModelForm):
             'user',
             'content'
         ]
-    """
+
     def clean_content(self, *args, **kwargs):
         content = self.cleaned_data.get('content')
         if content == 'abc':
-            raise forms.ValidationError('Cannot be abc')
+            raise forms.ValidationError('Cannot be abc. / BleepModelForm.clean_content')
         return content
-    """
