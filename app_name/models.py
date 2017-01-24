@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
@@ -21,3 +22,10 @@ class Bleep(models.Model):
 
     def __str__(self):
         return str(self.content)
+
+    # Called automatically every time a model is saved
+    def clean(self, *args, **kwargs):
+        content = self.content
+        if content == 'abc':
+            raise ValidationError('ValidationError! Cannot be abc')
+        return super(Bleep, self).clean(*args, **kwargs)
