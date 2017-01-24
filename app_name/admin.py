@@ -5,6 +5,7 @@ from .models import Bleep
 
 
 class BleepModelAdmin(admin.ModelAdmin):
-    form = BleepModelForm
+    # form = BleepModelForm
+    pass
 
-admin.site.register(Bleep, BleepModelAdmin)
+admin.site.register(Bleep)

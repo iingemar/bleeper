@@ -7,7 +7,6 @@ class BleepModelForm(forms.ModelForm):
     class Meta:
         model = Bleep
         fields = [
-            'user',
             'content'
         ]
 
