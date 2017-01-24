@@ -1,7 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
-
+from .forms import BleepModelForm
 from .models import Bleep
 
-admin.site.register(Bleep)
+
+class BleepModelAdmin(admin.ModelAdmin):
+    form = BleepModelForm
+
+admin.site.register(Bleep, BleepModelAdmin)
