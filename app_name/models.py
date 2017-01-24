@@ -24,8 +24,9 @@ class Bleep(models.Model):
         return str(self.content)
 
     # Called automatically every time a model is saved
+    # For the model, not specifically on the field.
     def clean(self, *args, **kwargs):
         content = self.content
         if content == 'abc':
-            raise ValidationError('ValidationError! Cannot be abc')
+            raise ValidationError('ValidationError! content cannot be abc')
         return super(Bleep, self).clean(*args, **kwargs)
