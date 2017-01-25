@@ -18,9 +18,21 @@ class BleepCreateView(CreateView):
 
 
 def bleep_create_view(request):
+    # Populate form
+    form = BleepModelForm(request.POST or None)
+
+    if form.is_valid():
+        # Create a database object from the data bound to the form
+        instance = form.save(commit=False)
+        # Set the user from the request
+        instance.user = request.user
+        # Then save.
+        instance.save()
+
     context = {
-        'bleeps': ''
+        'form': form
     }
+
     return render(request, 'bleep/bleep_create_view.html', context)
 
 
