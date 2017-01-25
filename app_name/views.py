@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView
 
@@ -6,10 +7,12 @@ from .mixins import FormUserNeededMixin
 from .models import Bleep
 
 
-class BleepCreateView(FormUserNeededMixin, CreateView):
+class BleepCreateView(LoginRequiredMixin, FormUserNeededMixin, CreateView):
     form_class = BleepModelForm
     template_name = 'bleep/bleep_create_view.html'
-    success_url = '/bleeps/create'
+    success_url = '/bleeps/create/'
+    # Needed for LoginRequiredMixin. Otherwise defaults to /accounts/login
+    login_url = '/admin/'
 
 
 def bleep_create_view(request):
