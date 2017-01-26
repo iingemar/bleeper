@@ -1,10 +1,17 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from .forms import BleepModelForm
-from .mixins import FormUserNeededMixin
+from .mixins import FormUserNeededMixin, UserOwnerMixin
 from .models import Bleep
+
+
+class BleepUpdateView(LoginRequiredMixin, UserOwnerMixin, UpdateView):
+    form_class = BleepModelForm
+    success_url = '/bleeps/'
+    queryset = Bleep.objects.all()
+    template_name = 'bleep/bleep_update_view.html'
 
 
 class BleepCreateView(LoginRequiredMixin, FormUserNeededMixin, CreateView):

@@ -12,3 +12,15 @@ class FormUserNeededMixin(object):
         else:
             form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList(['User must be logged in.'])
             return self.form_invalid(form)
+
+
+class UserOwnerMixin(FormUserNeededMixin, object):
+    def form_valid(self, form):
+        # Form is only valid if it's for the same user
+        if form.instance.user == self.request.user:
+            return super(FormUserNeededMixin, self).form_valid(form)
+        else:
+            form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList(['Not allowed.'])
+            return self.form_invalid(form)
+
+
