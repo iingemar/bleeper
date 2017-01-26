@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 
 from .validators import validate_content
 
@@ -32,3 +33,8 @@ class Bleep(models.Model):
         if content == 'abcd':
             raise ValidationError('Content cannot be abcd. /Bleep.clean')
         return super(Bleep, self).clean(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('bleeps:bleep_detail_view', kwargs={
+            'pk': self.pk
+        })

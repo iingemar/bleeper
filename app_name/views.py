@@ -8,17 +8,17 @@ from .mixins import FormUserNeededMixin, UserOwnerMixin
 from .models import Bleep
 
 
-class BleepUpdateView(LoginRequiredMixin, UserOwnerMixin, UpdateView):
-    form_class = BleepModelForm
-    success_url = '/bleeps/'
-    queryset = Bleep.objects.all()
-    template_name = 'bleep/bleep_update_view.html'
-
-
 class BleepCreateView(LoginRequiredMixin, FormUserNeededMixin, CreateView):
     form_class = BleepModelForm
     template_name = 'bleep/bleep_create_view.html'
-    success_url = reverse_lazy('bleeps:bleep_detail_view')
+    # Needed for LoginRequiredMixin. Otherwise defaults to /accounts/login
+    login_url = '/admin/'
+
+
+class BleepUpdateView(LoginRequiredMixin, UserOwnerMixin, UpdateView):
+    form_class = BleepModelForm
+    queryset = Bleep.objects.all()
+    template_name = 'bleep/bleep_update_view.html'
     # Needed for LoginRequiredMixin. Otherwise defaults to /accounts/login
     login_url = '/admin/'
 
@@ -27,6 +27,8 @@ class BleepDeleteView(LoginRequiredMixin, DeleteView):
     queryset = Bleep.objects.all()
     success_url = reverse_lazy('bleeps:index_view')
     template_name = 'bleep/bleep_confirm_delete.html'
+    # Needed for LoginRequiredMixin. Otherwise defaults to /accounts/login
+    login_url = '/admin/'
 
 
 def bleep_create_view(request):
@@ -56,9 +58,8 @@ def index_view(request):
     return render(request, 'bleep/index_view.html', context)
 
 
-def bleep_detail_view(request, bleep_id):
-    print(bleep_id)
-    bleep = get_object_or_404(Bleep, id=bleep_id)
+def bleep_detail_view(request, pk):
+    bleep = get_object_or_404(Bleep, id=pk)
     print(bleep)
     context = {
         'bleep': bleep
