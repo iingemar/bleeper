@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, UpdateView
 
 from .forms import BleepModelForm
 from .mixins import FormUserNeededMixin, UserOwnerMixin
@@ -20,6 +21,12 @@ class BleepCreateView(LoginRequiredMixin, FormUserNeededMixin, CreateView):
     success_url = '/bleeps/create/'
     # Needed for LoginRequiredMixin. Otherwise defaults to /accounts/login
     login_url = '/admin/'
+
+
+class BleepDeleteView(LoginRequiredMixin, DeleteView):
+    queryset = Bleep.objects.all()
+    success_url = reverse_lazy('home')
+    template_name = 'bleep/bleep_confirm_delete.html'
 
 
 def bleep_create_view(request):
