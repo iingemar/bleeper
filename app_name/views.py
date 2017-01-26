@@ -18,14 +18,14 @@ class BleepUpdateView(LoginRequiredMixin, UserOwnerMixin, UpdateView):
 class BleepCreateView(LoginRequiredMixin, FormUserNeededMixin, CreateView):
     form_class = BleepModelForm
     template_name = 'bleep/bleep_create_view.html'
-    success_url = '/bleeps/create/'
+    success_url = reverse_lazy('bleeps:bleep_detail_view')
     # Needed for LoginRequiredMixin. Otherwise defaults to /accounts/login
     login_url = '/admin/'
 
 
 class BleepDeleteView(LoginRequiredMixin, DeleteView):
     queryset = Bleep.objects.all()
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('bleeps:index_view')
     template_name = 'bleep/bleep_confirm_delete.html'
 
 
