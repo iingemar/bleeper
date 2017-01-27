@@ -4,6 +4,8 @@
     <div class="row">
         <div class="col-xs-6">
             <h1 class="page-header">Bleep list view</h1>
+            Search
+            {% include 'bleep/search_form.html' %}
             <ul>
             {% for bleep in object_list %}
                 <li>{{ bleep.user }} ({{ bleep.timestamp }}) -- {{ bleep.content }}</li>

@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -53,6 +54,19 @@ def bleep_create_view(request):
 class BleepListView(ListView):
     model = Bleep
     template_name = 'bleep/bleep_list_view.html'
+
+    def get_queryset(self, *args, **kwargs):
+        qs = Bleep.objects.all()
+        print(self.request.GET)
+        # Query defaults to None
+        query = self.request.GET.get('q', None)
+        print(query)
+        if query is not None:
+            qs = qs.filter(
+                Q(content__icontains=query) |
+                Q(user__username__icontains=query)
+            )
+        return qs
 
 
 def index_view(request):
