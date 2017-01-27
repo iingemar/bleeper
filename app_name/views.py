@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .forms import BleepModelForm
 from .mixins import FormUserNeededMixin, UserOwnerMixin
@@ -48,6 +48,11 @@ def bleep_create_view(request):
     }
 
     return render(request, 'bleep/bleep_create_view.html', context)
+
+
+class BleepListView(ListView):
+    model = Bleep
+    template_name = 'bleep/bleep_list_view.html'
 
 
 def index_view(request):

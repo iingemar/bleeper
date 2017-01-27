@@ -1,0 +1,16 @@
+{% extends 'bleep/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-6">
+            <h1 class="page-header">Bleep list view</h1>
+            <ul>
+            {% for bleep in object_list %}
+                <li>{{ bleep.user }} ({{ bleep.timestamp }}) -- {{ bleep.content }}</li>
+            {% empty %}
+                <li>No Bleeps yet.</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
