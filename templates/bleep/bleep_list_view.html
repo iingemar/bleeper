@@ -4,11 +4,20 @@
     <div class="row">
         <div class="col-xs-6">
             <h1 class="page-header">Bleep list view</h1>
-            Search
-            {% include 'bleep/search_form.html' %}
             <ul>
             {% for bleep in object_list %}
-                <li>{{ bleep.user }} ({{ bleep.timestamp }}) -- {{ bleep.content }}</li>
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object" src="..." alt="...">
+                </a>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading">{{ bleep.user }} - <small>{{ bleep.timestamp|timesince }}</small></h4>
+                {{ bleep.content }}<br/>
+                <a href="/bleeps/{{ bleep.id }}">View</a>
+              </div>
+            </div>
             {% empty %}
                 <li>No Bleeps yet.</li>
             {% endfor %}
