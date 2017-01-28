@@ -16,11 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from app_name.views import BleepListView
 from .views import home
 
 
 urlpatterns = [
-    url(r'^$', home, name='home'),
+    url(r'^$', BleepListView.as_view(), name='home'),
     url(r'^bleeps/', include('app_name.urls', namespace='bleeps')),
     url(r'^admin/', admin.site.urls),
 ]

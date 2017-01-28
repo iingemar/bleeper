@@ -23,10 +23,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'bleeps:index_view' %}">Bleep</a>
+          <a class="navbar-brand" href="{% url 'home' %}">Bleep</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-          <form class="navbar-form navbar-right" method="GET" action="{% url 'bleeps:index_view'%}">
+          <form class="navbar-form navbar-right" method="GET" action="{% url 'bleeps:search_view'%}">
             <div class="form-group">
               <input type="text" name="q" placeholder="Search" class="form-control" value="{{ request.GET.q }}">
             </div>
