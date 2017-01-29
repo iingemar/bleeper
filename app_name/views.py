@@ -54,6 +54,7 @@ def bleep_create_view(request):
 class BleepListView(ListView):
     model = Bleep
     template_name = 'bleep/bleep_list_view.html'
+    form_class = BleepModelForm()
 
     def get_queryset(self, *args, **kwargs):
         qs = Bleep.objects.all()
@@ -67,6 +68,12 @@ class BleepListView(ListView):
                 Q(user__username__icontains=query)
             )
         return qs
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(BleepListView, self).get_context_data(*args, **kwargs)
+        context['create_form'] = BleepModelForm()
+        context['create_url'] = reverse_lazy('bleeps:bleep_create_view')
+        return context
 
 
 def index_view(request):

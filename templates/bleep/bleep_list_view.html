@@ -1,27 +1,37 @@
 {% extends 'bleep/base.html' %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-xs-6">
-            <h1 class="page-header">Bleep list view</h1>
-            <ul>
-            {% for bleep in object_list %}
-            <div class="media">
-              <div class="media-left">
+
+{% if not request.GET.q %}
+<div class="row">
+    <div class="col-xs-6">
+        <h1 class="page-header">Bleep form</h1>
+        {% include 'bleep/form.html' with form=create_form btn_value='Bleep' action_url=create_url %}
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-xs-6">
+        <h1 class="page-header">Bleep list view</h1>
+        {% for bleep in object_list %}
+        <div class="media">
+            <div class="media-left">
                 <a href="#">
-                  <img class="media-object" src="..." alt="...">
+                    <img class="media-object" src="https://s3.amazonaws.com/uifaces/faces/twitter/whale/128.jpg">
                 </a>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">{{ bleep.user }} - <small>{{ bleep.timestamp|timesince }}</small></h4>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ bleep.user }} -
+                    <small>{{ bleep.timestamp|timesince }}</small>
+                </h4>
                 {{ bleep.content }}<br/>
                 <a href="/bleeps/{{ bleep.id }}">View</a>
-              </div>
             </div>
-            {% empty %}
-                <li>No Bleeps yet.</li>
-            {% endfor %}
-            </ul>
         </div>
+        {% empty %}
+        <div>No Bleeps yet.</div>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}
