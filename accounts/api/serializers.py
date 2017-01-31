@@ -1,6 +1,6 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from accounts.api.serializers import UserDisplaySerializer
 from app_name.models import Bleep
 
 # Serializers allow complex data such as query sets and model instances to be
@@ -13,13 +13,24 @@ from app_name.models import Bleep
 # serializers that deal with model instances and querysets.
 
 
-class BleepModelSerializer(serializers.ModelSerializer):
-    user = UserDisplaySerializer()
+User = get_user_model()
+
+
+class UserDisplaySerializer(serializers.ModelSerializer):
+    follower_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = Bleep
+        model = User
         fields = [
-            'user',
-            'content',
-            'timestamp'
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'follower_count'
         ]
+
+    # Must be 'get_' followed by field name above.
+    # Obj is the User instance.
+    def get_follower_count(self, obj):
+        print(obj.username)
+        return 0
