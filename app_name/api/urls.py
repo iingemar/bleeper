@@ -1,11 +1,10 @@
 from django.conf.urls import url
 
-from django.views.generic.base import RedirectView
-
 from .views import (
-
+    BleepListAPIView
 )
 
 urlpatterns = [
+    url(r'^$', BleepListAPIView.as_view(), name='list'),
 
 ]
