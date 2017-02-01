@@ -27,11 +27,31 @@ var indexView = new IndexView();
 
 indexView.render();
 
+
+var getParameterByName = function(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+
 $(document).ready(function() {
     console.log('ajax');
 
+    var q = getParameterByName('q');
+    console.log('q=' + q);
+
     $.ajax({
         url: '/api/bleeps',
+        data: {
+            'q': q
+        },
         method: 'GET',
         success: function(bleeps) {
             console.log('SUCCESS');
