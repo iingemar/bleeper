@@ -57,7 +57,7 @@ class BleepListView(ListView):
     form_class = BleepModelForm()
 
     def get_queryset(self, *args, **kwargs):
-        qs = Bleep.objects.all()
+        qs = Bleep.objects.all().order_by('-timestamp')
         print(self.request.GET)
         # Query defaults to None
         query = self.request.GET.get('q', None)
@@ -77,7 +77,7 @@ class BleepListView(ListView):
 
 
 def index_view(request):
-    bleeps = Bleep.objects.all()
+    bleeps = Bleep.objects.all().order_by('-timestamp')
     context = {
         'bleeps': bleeps
     }

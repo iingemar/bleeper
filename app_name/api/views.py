@@ -19,7 +19,7 @@ class BleepListAPIView(generics.ListAPIView):
     serializer_class = BleepModelSerializer
 
     def get_queryset(self, *args, **kwargs):
-        qs = Bleep.objects.all()
+        qs = Bleep.objects.all().order_by('-timestamp')
         print(self.request.GET)
         # Query defaults to None
         query = self.request.GET.get('q', None)
