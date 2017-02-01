@@ -20,8 +20,9 @@ var getBleeps = function() {
         },
         method: 'GET',
         success: function(bleeps) {
+            $('.bleep-container').empty();
             _.each(bleeps, function(bleep){
-                $('.bleep-container').append('<li>' + bleep.content + '</li>');
+                $('.bleep-container').append('<li>' + bleep.content +  '<br/> '+ bleep.date_display +'</li>');
             })
         }
     });

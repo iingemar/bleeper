@@ -1,3 +1,5 @@
+from django.utils.timesince import timesince
+
 from rest_framework import serializers
 
 from accounts.api.serializers import UserDisplaySerializer
@@ -17,11 +19,21 @@ class BleepModelSerializer(serializers.ModelSerializer):
     # Only for reading.
     # You can also use write_only=True/False
     user = UserDisplaySerializer(read_only=True)
+    date_display = serializers.SerializerMethodField()
+    timesince = serializers.SerializerMethodField()
 
     class Meta:
         model = Bleep
         fields = [
             'user',
             'content',
-            'timestamp'
+            'timestamp',
+            'date_display',
+            'timesince'
         ]
+
+    def get_date_display(self, obj):
+        return obj.timestamp.strftime('%b %d, %I:%M %p ')
+
+    def get_timesince(self, obj):
+        return timesince(obj.timestamp) + ' ago'
