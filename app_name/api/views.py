@@ -1,9 +1,18 @@
 from django.db.models import Q
 
 from rest_framework import generics
+from rest_framework import permissions
 
 from app_name.models import Bleep
 from .serializers import BleepModelSerializer
+
+
+class BleepCreateAPIView(generics.CreateAPIView):
+    serializer_class = BleepModelSerializer
+    permissions_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class BleepListAPIView(generics.ListAPIView):
@@ -21,3 +30,5 @@ class BleepListAPIView(generics.ListAPIView):
                 Q(user__username__icontains=query)
             )
         return qs
+
+

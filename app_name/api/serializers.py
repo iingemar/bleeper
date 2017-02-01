@@ -14,7 +14,9 @@ from app_name.models import Bleep
 
 
 class BleepModelSerializer(serializers.ModelSerializer):
-    user = UserDisplaySerializer()
+    # Only for reading.
+    # You can also use write_only=True/False
+    user = UserDisplaySerializer(read_only=True)
 
     class Meta:
         model = Bleep
