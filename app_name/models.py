@@ -38,3 +38,6 @@ class Bleep(models.Model):
         return reverse('bleeps:bleep_detail_view', kwargs={
             'pk': self.pk
         })
+
+    class Meta:
+        ordering = ['-timestamp']
