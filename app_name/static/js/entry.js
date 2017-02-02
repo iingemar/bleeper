@@ -13,6 +13,8 @@ var getParameterByName = function(name, url) {
 };
 
 var getBleeps = function() {
+    console.log('getBleeps');
+
     $.ajax({
         url: '/api/bleeps',
         data: {
@@ -20,8 +22,11 @@ var getBleeps = function() {
         },
         method: 'GET',
         success: function(bleeps) {
+            console.log('getBleeps: SUCCESS');
+            console.log('getBleeps:', bleeps);
+
             $('.bleep-container').empty();
-            _.each(bleeps, function(bleep){
+            _.each(bleeps.results, function(bleep){
                 $('.bleep-container').append('<li>' + bleep.content +  '<br/> '+ bleep.date_display +'</li>');
             })
         }

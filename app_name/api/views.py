@@ -4,6 +4,7 @@ from rest_framework import generics
 from rest_framework import permissions
 
 from app_name.models import Bleep
+from .pagination import StandardResultPagination
 from .serializers import BleepModelSerializer
 
 
@@ -17,6 +18,7 @@ class BleepCreateAPIView(generics.CreateAPIView):
 
 class BleepListAPIView(generics.ListAPIView):
     serializer_class = BleepModelSerializer
+    pagination_class = StandardResultPagination
 
     def get_queryset(self, *args, **kwargs):
         qs = Bleep.objects.all().order_by('-timestamp')
