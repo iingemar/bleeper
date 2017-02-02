@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', BleepListView.as_view(), name='home'),
     url(r'^bleeps/', include('app_name.urls', namespace='bleeps')),
+    url(r'^profiles/', include('accounts.urls', namespace='profiles')),
     url(r'^api/bleeps/', include('app_name.api.urls', namespace='bleeps-api')),
 ]

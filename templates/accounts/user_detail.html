@@ -1,0 +1,16 @@
+{% extends 'bleep/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-6">
+            <h1 class="page-header">User detail view</h1>
+            <p>{{ object.username }}</p>
+        </div>
+        <div class="col-xs-6">
+            <h1 class="page-header">Bleeps</h1>
+            {% for bleep in object.bleep_set.all %}
+                {% include 'bleep/bleep.html' with bleep=bleep %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
