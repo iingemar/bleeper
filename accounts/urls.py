@@ -5,5 +5,5 @@ from .views import (
 )
 
 urlpatterns = [
-    url(r'^(?P<pk>[0-9]+)/$', UserDetailView.as_view(), name='detail'),
+    url(r'^(?P<username>[\w.@+-_]+)/$', UserDetailView.as_view(), name='detail'),
 ]
