@@ -15,6 +15,8 @@ var getParameterByName = function(name, url) {
 var getBleeps = function() {
     console.log('getBleeps');
 
+    var bleepTemplate = _.template($("#bleepTemplate").html())
+
     $.ajax({
         url: '/api/bleeps',
         data: {
@@ -27,7 +29,8 @@ var getBleeps = function() {
 
             $('.bleep-container').empty();
             _.each(bleeps.results, function(bleep){
-                $('.bleep-container').append('<li>' + bleep.content +  '<br/> '+ bleep.date_display +'</li>');
+                var bleepHtml = bleepTemplate({data: bleep});
+                $('.bleep-container').append(bleepHtml);
             })
         }
     });
