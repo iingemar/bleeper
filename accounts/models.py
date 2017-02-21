@@ -6,6 +6,17 @@ from django.db import models
 # Create your models here.
 
 
+class UserProfileManager(models.Manager):
+    def all(self):
+        qs = self.get_queryset().all()
+        try:
+            if self.instance:
+                qs = qs.exclude(user=self.instance)
+        except:
+            pass
+        return qs
+
+
 class UserProfile(models.Model):
     # One user has one profile
     # Accessed by user object.profile
