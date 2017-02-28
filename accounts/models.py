@@ -2,8 +2,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-
-# Create your models here.
+from django.db.models.signals import post_save
 
 
 class UserProfileManager(models.Manager):
@@ -37,3 +36,14 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username + ' (' + str(self.following.all().count()) + ')'
+
+
+# This is run every time the user objects is saved.
+def post_save_user_receiever(sender, instance, created, *args, **kwarags):
+    print(instance)
+    if created:
+        UserProfile.objects.get_or_create(user=instance)
+
+
+post_save.connect(post_save_user_receiever, sender=settings.AUTH_USER_MODEL)
+
