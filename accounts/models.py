@@ -16,6 +16,14 @@ class UserProfileManager(models.Manager):
             pass
         return qs
 
+    def user_follow(self, user, toggle_user):
+        # Returns tuple (user_profile, boolean created)
+        user_profile, created = UserProfile.objects.get_or_create(user=user)
+        if toggle_user in user_profile.following:
+            user_profile.following.remove(toggle_user)
+        else:
+            user_profile.following.add(toggle_user)
+
 
 class UserProfile(models.Model):
     # One user has one profile
