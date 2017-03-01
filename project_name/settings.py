@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'accounts',
-    'app_name'
+    'app_name',
+    'hashtags'
 ]
 
 MIDDLEWARE_CLASSES = [

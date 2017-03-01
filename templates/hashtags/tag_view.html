@@ -1,0 +1,12 @@
+{% extends 'bleep/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-6">
+            <h1 class="page-header">{{ hashtag.tag }}</h1>
+            {% for bleep in hashtag.get_bleeps %}
+                {{ bleep.content}} <br/>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
