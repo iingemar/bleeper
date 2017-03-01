@@ -6,7 +6,7 @@
             <h1 class="page-header">User detail view</h1>
             <p>{{ object.username }}</p>
             <p>Followers: {{ object.followed_by.count }}</p>
-            <p><a href="btn btn-link" href="{% url 'profiles:follow' username=object.username %}">Follow</a></p>
+            <p><a class="btn btn-link" href="{% url 'profiles:follow' username=object.username %}">Follow</a></p>
 
             <h1 class="page-header">Following</h1>
             {% for user in object.profile.following.all %}
