@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
 
+from hashtags.signals import parsed_hashtags
 from .validators import validate_content
 
 
@@ -77,11 +78,12 @@ def post_save_bleep_receiever(sender, instance, created, *args, **kwarags):
             # print('username=' + username)
 
         hashtag_regexp = r'#(?P<hashtag>[\w\d-]+)'
-        match = re.findall(hashtag_regexp, instance.content)
-        if match:
-            print(match)
+        hashtags = re.findall(hashtag_regexp, instance.content)
+        if hashtags:
+            print(hashtags)
             # hashtag = m.group('hashtag')
             # print('hashtag=' + hashtag)
+            parsed_hashtags.send(sender=instance.__class__, hashtags_list=hashtags)
     else:
         pass
     print('post_save_bleep_receiever -------')
