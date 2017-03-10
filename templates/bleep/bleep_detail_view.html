@@ -4,7 +4,18 @@
     <div class="row">
         <div class="col-xs-6">
             <h1 class="page-header">Detail view</h1>
-            <p>{{ bleep.content }}</p>
+            <p>id: {{ bleep.id }}</p>
+            <p>content: {{ bleep.content }}</p>
+            <hr/>
+            {% if bleep.parent %}
+                <p>parent.id: {{ bleep.parent.id }}</p>
+                <p>parent.content: {{ bleep.parent.content }}</p>
+                <p>parent.user: {{ bleep.parent.user }}</p>
+            {% else %}
+                <p>parent: {{ bleep.parent }}</p>
+            {% endif %}
+            <hr/>
+            <a class="btn btn-primary" href="{{ bleep.get_absolute_url }}rebleep/">Rebleep</a>
         </div>
     </div>
 {% endblock %}
