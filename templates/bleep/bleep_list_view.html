@@ -11,13 +11,17 @@
 </div>
 {% endif %}
 
-<div class="bleep-container">
-
-</div>
 
 <div class="row">
     <div class="col-xs-6">
-        <h1 class="page-header">Bleep list view</h1>
+        <h3 class="page-header">Bleeps from <a href="/api/bleeps">Bleep List Api</a></h3>
+        <div class="bleep-container">
+            js loaded content
+        </div>
+    </div>
+
+    <div class="col-xs-6">
+        <h3 class="page-header">Bleeps from Django templates</h3>
         {% for bleep in object_list %}
             {% include 'bleep/bleep.html' with bleep=bleep %}
         {% empty %}

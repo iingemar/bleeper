@@ -21,6 +21,7 @@ class BleepModelSerializer(serializers.ModelSerializer):
     user = UserDisplaySerializer(read_only=True)
     date_display = serializers.SerializerMethodField()
     timesince = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
 
     class Meta:
         model = Bleep
@@ -29,7 +30,8 @@ class BleepModelSerializer(serializers.ModelSerializer):
             'content',
             'timestamp',
             'date_display',
-            'timesince'
+            'timesince',
+            'url'
         ]
 
     def get_date_display(self, obj):
@@ -37,3 +39,6 @@ class BleepModelSerializer(serializers.ModelSerializer):
 
     def get_timesince(self, obj):
         return timesince(obj.timestamp) + ' ago'
+
+    def get_url(self, obj):
+        return obj.get_absolute_url()
