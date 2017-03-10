@@ -1,8 +1,10 @@
 from __future__ import unicode_literals
+import re
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import post_save
 from django.urls import reverse
 
 from .validators import validate_content
@@ -60,3 +62,29 @@ class Bleep(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+
+
+# This is run every time a bleep object is saved.
+def post_save_bleep_receiever(sender, instance, created, *args, **kwarags):
+    print('post_save_bleep_receiever -------')
+    print(instance)
+    if created and not instance.parent:
+        user_regexp = r'@(?P<username>[a-z_]+)'
+        match = re.findall(user_regexp, instance.content)
+        if match:
+            print(match)
+            # username = m.group('username')
+            # print('username=' + username)
+
+        hashtag_regexp = r'#(?P<hashtag>[\w\d-]+)'
+        match = re.findall(hashtag_regexp, instance.content)
+        if match:
+            print(match)
+            # hashtag = m.group('hashtag')
+            # print('hashtag=' + hashtag)
+    else:
+        pass
+    print('post_save_bleep_receiever -------')
+
+post_save.connect(post_save_bleep_receiever, sender=Bleep)
+
