@@ -8,7 +8,24 @@ from django.urls import reverse
 from .validators import validate_content
 
 
+class BleepManager(models.Manager):
+    def rebleep(self, user, parent_obj):
+        if parent_obj.parent:
+            original_parent = parent_obj.parent
+        else:
+            original_parent = parent_obj
+
+        obj = self.model(
+            parent = original_parent,
+            user = user,
+            content = parent_obj.content
+        )
+        obj.save()
+        return obj
+
+
 class Bleep(models.Model):
+    parent = models.ForeignKey('self', blank=True, null=True)
     # AUTH_USER_MODEL if we want to substitute with a custom User model
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     content = models.CharField(max_length=140, validators=[
@@ -22,6 +39,8 @@ class Bleep(models.Model):
     # Note! This will cause the field to have editable=False and blank=True
     # and therefore not show up in the admin panel.
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    objects = BleepManager()
 
     def __str__(self):
         return str(self.content)

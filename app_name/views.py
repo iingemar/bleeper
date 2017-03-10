@@ -1,7 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -12,6 +14,16 @@ from django.views.generic import (
 from .forms import BleepModelForm
 from .mixins import FormUserNeededMixin, UserOwnerMixin
 from .models import Bleep
+
+
+class RebleepView(View):
+    def get(self, request, pk, *args, **kwargs):
+        bleep = get_object_or_404(Bleep, pk=pk)
+        if request.user.is_authenticated():
+            new_bleep = Bleep.objects.rebleep(request.user, bleep)
+            return HttpResponseRedirect(new_bleep.get_absolute_url())
+        else:
+            return HttpResponseRedirect(bleep.get_absolute_url())
 
 
 class BleepCreateView(LoginRequiredMixin, FormUserNeededMixin, CreateView):
